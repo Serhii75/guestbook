@@ -35,3 +35,14 @@ body {
   border-radius: 0;
 }
 /* END OF LOGIN FORM */
+
+.form-register {
+  max-width: 700px;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+.form-register button.btn-primary {
+  width: 200px;
+  margin: auto;
+}

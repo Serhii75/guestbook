@@ -1,7 +1,13 @@
 <?php
 
-class User
+class User extends Model
 {
+	public function __construct()
+	{
+		parent::__construct();
+		$this->timestatmp = true;
+	}
+
 	public function authorize($username, $password)
 	{
 		$username = clean($username);
@@ -32,16 +38,34 @@ class User
 		return true;
 	}
 
+	public function register($data)
+	{
+		$data['username'] = clean($data['username']);
+		$data['email'] = clean($data['email']);
+		$data['password'] = clean($data['pswd']);
+		$pswdConfirm = clean($data['pswd_confirm']);
+
+		if ( $data['password'] != $pswdConfirm ) {
+			$_SESSION['error'] = 'Неверное подтверждение пароля';
+		}
+
+		return $this->save($data);
+	}
+
+	protected function save($data, $id = null)
+	{
+
+	}
+
 	public function getByName($username)
 	{
-		if ( $username == 'Serhii' ) {
-			$user['id'] = 1;
-			$user['name'] = 'Serhii';
-			$user['password'] = md5('123');
-			$user['role'] = 'admin';
+		$username = $this->db->escape($username);
+		$sql = "SELECT * FROM users WHERE username = '{$username}' LIMIT 1";
+		$result = $this->db->query($sql);
 
-			return $user;
+		if ( isset($result[0]) ) {
+			return $result[0];
 		}
-		return null;
+		return false;
 	}
 }
