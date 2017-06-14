@@ -31,9 +31,7 @@ class User extends Model
 		$_SESSION['user'] = $user;
 		$_SESSION['user']['authHash'] = $authHash;
 
-		if ( !setcookie("authHash", $authHash) ) {
-			die('Coookie was not set');
-		}
+		setcookie("authHash", $authHash, time()+3600*24*7, '/');
 
 		return true;
 	}

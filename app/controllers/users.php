@@ -12,7 +12,7 @@ class Users extends Controller
 	{
 		if ( isset($_POST['username']) && isset($_POST['password']) ) {
 			if ( $this->usersModel->authorize($_POST['username'], $_POST['password']) ) {
-				//redirect(baseUrl());
+				redirect(baseUrl());
 			}
 		}
 
