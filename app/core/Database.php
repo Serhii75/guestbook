@@ -11,8 +11,8 @@ class Database
 		$this->connection = new mysqli('localhost', 'root', 
 					'', 'guestbook');
 
-		if ( mysqli_connect_error() ) {
-			throw new Exception('Could not connect to DB. Error: ' . mysqli_connect_error());
+		if ( $this->connection->connect_errno ) {
+			throw new Exception('Could not connect to DB. Error: ' . $this->connection->connect_error);
 		}
 
 		$this->connection->set_charset('utf8');
@@ -34,8 +34,8 @@ class Database
 
 		$result = $this->connection->query($sql);
 
-		if ( mysqli_error($this->connection) ) {
-			throw new Exception(mysqli_error($this->connection));
+		if ( $this->connection->error ) {
+			throw new Exception($this->connection->error);
 		}
 
 		if ( is_bool($result) ) {
@@ -43,7 +43,7 @@ class Database
 		}
 
 		$data = array();
-		while ( $row = mysqli_fetch_assoc($result) ) {
+		while ( $row = $result->fetch_assoc() ) {
 			$data[] = $row;
 		}
 
@@ -52,7 +52,7 @@ class Database
 
 	public function escape($str)
 	{
-		return mysqli_escape_string($this->connection, $str);
+		return $this->connection->real_escape_string($str);
 	}
 
 	public function escapeArray($data)
