@@ -5,7 +5,7 @@ class User extends Model
 	public function __construct()
 	{
 		parent::__construct();
-		$this->timestatmp = true;
+		$this->table = 'users';
 	}
 
 	public function authorize($username, $password)
@@ -36,29 +36,98 @@ class User extends Model
 		return true;
 	}
 
-	public function register($data)
+	public function register($data = [])
 	{
-		$data['username'] = clean($data['username']);
-		$data['email'] = clean($data['email']);
-		$data['password'] = clean($data['pswd']);
-		$pswdConfirm = clean($data['pswd_confirm']);
-
-		if ( $data['password'] != $pswdConfirm ) {
-			$_SESSION['error'] = 'Неверное подтверждение пароля';
+		$data = cleanData($data);
+		
+		if ( !$this->checkUniqueFieldValue('username', $data['username']) ) {
+			$_SESSION['error'] = 'Пользователь с таким именем уже существует';
+			return false;
 		}
 
-		return $this->save($data);
+		if ( !$this->checkUniqueFieldValue('email', $data['email']) ) {
+			$_SESSION['error'] = 'Пользователь с таким e-mail уже существует';
+			return false;
+		}
+
+		if ( $data['password'] != $data['pswd_confirm'] ) {
+			$_SESSION['error'] = 'Неверное подтверждение пароля';
+			return false;
+		}
+
+		unset($data['pswd_confirm']);
+		$data['password'] = md5($data['password']);
+		$data['role_id'] = 2;
+		$data['avatar'] = 'avatar.png';
+		$data['published'] = 1;
+		$now = date('Y-m-d H:i:s');
+		$data['created_at'] = $now;
+		$data['modified_at'] = $now;
+		$data['last_visit'] = $now;
+
+		return $this->create($data);
 	}
 
-	protected function save($data, $id = null)
+	public function edit($data, $id)
 	{
+		if ( empty($data['username']) ) {
+			$_SESSION['error'] = 'Заполните поле \'Имя пользователя\'';
+			return false;
+		}
+		
+		if ( !$this->checkUniqueFieldValue('username', $data['username'], $id) ) {
+			$_SESSION['error'] = 'Пользователь с таким именем уже существует';
+			return false;
+		}
 
+		if ( !$this->checkUniqueFieldValue('email', $data['email'], $id) ) {
+			$_SESSION['error'] = 'Пользователь с таким e-mail уже существует';
+			return false;
+		}
+
+		if ( empty($data['email']) ) {
+			$_SESSION['error'] = 'Заполните поле \'Email\'';
+			return false;
+		}
+
+		if ( !empty($data['new_pswd']) ) {
+			if ( $data['new_pswd'] == $data['pswd_confirm'] ) {
+				$data['password'] = md5($data['new_pswd']);
+			} else {
+				$_SESSION['error'] = 'Неверное подтверждение пароля';
+				return false;
+			}
+		}
+		unset($data['new_pswd']);
+		unset($data['pswd_confirm']);
+
+		$data['modified_at'] = date('Y-m-d H:i:s');
+		
+		$current = $_SESSION['user'];
+		foreach ($data as $key => $value) {
+			if ( $current[$key] == $value ) {
+				unset($data[$key]);
+			}
+		}
+
+		return $this->update($data, $id);
 	}
 
 	public function getByName($username)
 	{
 		$username = $this->db->escape($username);
-		$sql = "SELECT * FROM users WHERE username = '{$username}' LIMIT 1";
+		$sql = "SELECT * FROM " . $this->table . " WHERE username = '{$username}' LIMIT 1";
+		$result = $this->db->query($sql);
+
+		if ( isset($result[0]) ) {
+			return $result[0];
+		}
+		return false;
+	}
+
+	public function getById($id)
+	{
+		$sql = "SELECT * FROM users WHERE id = '{$id}'";
 		$result = $this->db->query($sql);
 
 		if ( isset($result[0]) ) {

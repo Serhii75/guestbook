@@ -6,7 +6,9 @@ class Controller
 
 	public function __construct()
 	{
-		
+		if ( isset($_SESSION['user']) ) {
+			$this->data['user'] = $_SESSION['user'];
+		}
 	}
 
 	public function model($model)

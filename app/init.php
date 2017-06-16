@@ -9,3 +9,4 @@ require_once 'core/Model.php';
 
 
 define('TEMPLATE_PATH', ROOT . '/app/views/');
+define('ADMIN', 1);

@@ -19,7 +19,16 @@ function redirect($url)
 
 function clean($str)
 {
-	return htmlspecialchars(strip_tags(stripslashes(trim($str))));
+	return htmlspecialchars(strip_tags(trim($str)));
+}
+
+function cleanData($data = [])
+{
+    foreach ($data as $key => $value) {
+        $data[$key] = clean($value);
+    }
+
+    return $data;
 }
 
 function isAuthorized()
@@ -32,4 +41,17 @@ function isAuthorized()
         return false;
     }
     return true;
+}
+
+function setValue($fieldName, $default)
+{
+    if ( isset($_POST[$fieldName]) && !empty($_POST[$fieldName]) ) {
+        return $_POST[$fieldName];
+    }
+
+    if ( isset($default) ) {
+        return $default;
+    }
+
+    return '';
 }

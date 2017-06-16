@@ -14,6 +14,8 @@ class Database
 		if ( mysqli_connect_error() ) {
 			throw new Exception('Could not connect to DB. Error: ' . mysqli_connect_error());
 		}
+
+		$this->connection->set_charset('utf8');
 	}
 
 	public static function getInstance()
@@ -51,5 +53,19 @@ class Database
 	public function escape($str)
 	{
 		return mysqli_escape_string($this->connection, $str);
+	}
+
+	public function escapeArray($data)
+	{
+		foreach ($data as $key => $value) {
+			$data[$key] = $this->escape($value);
+		}
+
+		return $data;
+	}
+
+	public function getInsertedId()
+	{
+		return $this->connection->insert_id;
 	}
 }
