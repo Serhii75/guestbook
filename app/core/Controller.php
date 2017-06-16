@@ -23,4 +23,10 @@ class Controller
 		extract($data);
 		require_once TEMPLATE_PATH . 'layout.php';
 	}
+
+	public function show404()
+	{
+		$this->view('errors/404');
+		exit();
+	}
 }

@@ -42,7 +42,7 @@ class Users extends Controller
 	public function profile($id = null)
 	{
 		$id = (int)$id;
-		$id || redirect(baseUrl());
+		$id || $this->show404();
 
 		if ( isset($_POST) && !empty($_POST) ) {
 			if ( $this->userModel->edit($_POST, $id) ) {

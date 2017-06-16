@@ -13,20 +13,20 @@
 		<?php foreach ( $comments as $comment ) : ?>
 		<div class="comment-item mb-3">
 			<div class="row">
-				<div class="col-3">
+				<div class="col-sm-3">
 					<div class="comment-data">
-						<img class="img-fluid rounded" src="<?= baseUrl().'/images/avatars/'.$comment['avatar'] ?>" alt="">
+						<img class="img-fluid rounded float-left float-sm-none" src="<?= baseUrl().'/images/avatars/'.$comment['avatar'] ?>" alt="">
 						<p><?= $comment['author'] ?></p>
 						<p class="comment-date">Последний визит: <?= date('Y-m-d H:i', strtotime($comment['last_visit'])) ?></p>
 					</div>
 				</div>
-				<div class="col-9">
+				<div class="col-sm-9">
 					<div class="comment-body">
 						<p class="comment-date">
 							<?= date('Y-m-d H:i', strtotime($comment['created_at'])) ?>
 							<?php if ( isset($user) && ($comment['user_id'] == $user['id'] || $user['role_id'] == ADMIN) ) : ?>
-								<a href="<?= baseUrl().'/comments/edit/'.$comment['id'] ?>" class="btn btn-sm btn-primary float-right ml-1">Редактировать</a>
-								<a href="<?= baseUrl().'/comments/remove/'.$comment['id'] ?>" class="btn btn-sm btn-danger float-right" onclick="return confirm('Комментарий будет безвозвратно удалён. Вы уверены?')">Удалить</a>
+								<a href="<?= baseUrl().'/comments/edit/'.$comment['id'] ?>" class="btn btn-sm btn-primary float-right ml-1"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <span class="hidden-sm-down">Редактировать</span></a>
+								<a href="<?= baseUrl().'/comments/remove/'.$comment['id'] ?>" class="btn btn-sm btn-danger float-right" onclick="return confirm('Комментарий будет безвозвратно удалён. Вы уверены?')"><i class="fa fa-trash-o" aria-hidden="true"></i> <span class="hidden-sm-down">Удалить</span></a>
 							<?php endif; ?>
 						</p>
 						<p><?= $comment['comment'] ?></p>

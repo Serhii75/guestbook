@@ -29,7 +29,7 @@ class Comments extends Controller
 	public function edit($id = null)
 	{
 		$id = (int)$id;
-		$id || redirect(baseUrl());
+		$id || $this->show404();
 
 		if ( isset($_POST) && !empty($_POST) ) {
 			if ( $this->commentModel->update($_POST, $id) ) {
@@ -46,7 +46,7 @@ class Comments extends Controller
 	public function remove($id = null)
 	{
 		$id = (int)$id;
-		$id || redirect(baseUrl());
+		$id || $this->show404();
 
 		if ( $this->commentModel->delete($id) ) {
 			$_SESSION['message'] = "Комментарий успешно удалён";

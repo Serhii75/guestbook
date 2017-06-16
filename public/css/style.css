@@ -34,6 +34,8 @@ body {
 .comment-data img {
   padding: 10px;
   border: 1px solid #ddd;
+  margin-right: 10px; 
+  margin-bottom: 5px;
 }
 
 .comment-data p {
@@ -179,4 +181,3 @@ body {
   border: 1px solid #ccc;
 }
 /* END OF PROFILE FORM */
-
