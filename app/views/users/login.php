@@ -27,7 +27,7 @@
         <input type="password" id="password" name="password" class="form-control" placeholder="Пароль" required>
         <div class="checkbox">
           <label>
-            <input type="checkbox" value="remember-me"> Запомнить меня
+            <input type="checkbox" id="remember" name="remember" value="remember"> Запомнить меня
           </label>
         </div>
         <button class="btn btn-primary btn-block" type="submit">Войти</button>

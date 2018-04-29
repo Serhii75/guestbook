@@ -29,4 +29,13 @@ class Controller
 		$this->view('errors/404');
 		exit();
 	}
+
+	/*public function checkUser()
+	{
+		if ( isset($_SESSION['user']['authHash']) && isset($_COOKIE['authHash']) ) {
+			if ( $_SESSION['user']['authHash'] == $_COOKIE['authHash'] ) {
+				$this->data['user'] = $_SESSION['user'];
+			}
+		} 
+	}*/
 }

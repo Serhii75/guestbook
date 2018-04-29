@@ -9,17 +9,17 @@ $(document).ready(function() {
 			formData.append('avatar', fileToUpload);
 
 			$.ajax({
-				url: 'users/upload',
+				url: 'http://guestbook.dev/users/upload',
 				type: 'post',
 				data: 'formData',
 				dataType: 'json',
 				processData: false,
-				contentType: false,
+				contentType: 'application/json',
 				success: function(data) {
 					if ( data['error'] ) {
-						$('#uploadError').html(data['error']);
+						$('#uploadError').html(data);
 					} else {
-						alert('OK!');
+						alert(data);
 					}
 				},
 				error: function(data, textStatus, errorThrown) {

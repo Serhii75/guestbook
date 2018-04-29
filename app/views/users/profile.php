@@ -48,7 +48,7 @@
 				<div class="upload">
 					<input type="file" class="inputfile" name="avatar" id="avatar" value="<?= $user['avatar']; ?>">
 					<label for="avatar">
-						<span id="filename"></span>
+						<span id="filename"><?= $user['avatar']; ?></span>
 						<span id="filelabel">Выберите файл</span>
 					</label>
 					<div class="thumbnail">

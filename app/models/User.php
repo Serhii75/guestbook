@@ -31,7 +31,10 @@ class User extends Model
 		$_SESSION['user'] = $user;
 		$_SESSION['user']['authHash'] = $authHash;
 
-		setcookie("authHash", $authHash, time()+3600*24*7, '/');
+		$remember = isset($_POST['remember']) ?: false;
+		if ( $remember ) {
+			setcookie("authHash", $authHash, time()+3600*24*7, '/');	
+		}
 
 		return true;
 	}

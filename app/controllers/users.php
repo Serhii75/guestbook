@@ -65,8 +65,9 @@ class Users extends Controller
 			$data = [];
 			$data['filename'] = $_FILES['avatar']['name'];
 
-			header('Content-Type: text/json');
+			//header('Content-Type: text/json');
 			echo json_encode($data);
+			exit;
 		}
 	}
 }
