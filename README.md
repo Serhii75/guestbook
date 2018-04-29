@@ -1,21 +1,16 @@
 # guestbook
 Simple MVC Guestbook
 
-Установка такая же как и для магазина (https://github.com/Serhii75/shop-no-oop/wiki)
+How to install:
+1. Clone or download the repository
+2. Create virtual host
+3. Reload your local server
+4. Create DB and edit config file (guestbook/app/config/config.php)
 
-Что сделано:
-1.	Простенький роутинг с отправлением на 404, если левый url
-2.	Родительские контроллер и модель, CRUD в родительской модели
-3.	С вьюшкой есть нюанс – subview каким-то чудом надо передать в шаблон. Т.е. в дочерних контроллерах всё как бы путём, но в родителе такой же фокус с массивом, как и в shop-no-oop
-4.	Авторизация (логин/регистрация), редактирование профиля. При авторизации, редактировании проверяется уникальность логина и мыла 
-5.	Добавление, редактирование, удаление комментариев
-6.	Обычный юзер может редактировать и удалять только свои комменты, админ, как обычно, может всё
-7.	Простой адаптивный дизайн. К слову, Boostrap 4 снова приятно порадовал всякими нужными штуками – @media вообще не пришлось писать
-8.	Понятно, что нужно делать полноценную валидацию (я б её вообще вынес в отдельный класс), но всему своё время.
-
-На данный момент осталось реализовать:
-1. Миграции
-2. Пейджинг комменариев
-3. Доработать "Запомнить меня"
-4. Ajax-загрузка аватара (загрузки пока нет вообще - хотел сразу с Ajax, но пока не работает)
-5. Обновление поля last_visit у юзеров
+What is done:
+1.	Simple routing. Redirect to 404 page, if url is not found
+2.	Parent controller and model, CRUD in the parent model
+3.	Authrorization (login/register), editing profile. Check uniqueness of login and email
+4.	Comments adding / editing / deleting.
+5.	User can edit and delete onlyhis own comments. Admin can edit and delete all the comments.
+7.	Simple adaptive design based on Bootstrap 4.
